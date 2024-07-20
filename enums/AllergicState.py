@@ -3,6 +3,7 @@ from enum import Enum
 
 class AllergicState(Enum):
     NONE = "None"
-    MILD = "Mild"
-    MODERATE = "Moderate"
-    SEVERE = "Severe"
+    EDEMA = "Edema"
+    BRONCHOSPASM = "Bronchospasm"
+    SEVERE_BRONCHOSPASM = "Severe-Bronchospasm"
+    ANAPHYLACTIC_SHOCK = "Anaphylactic-Shock"

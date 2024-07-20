@@ -2,5 +2,8 @@ from enum import Enum
 
 
 class HematologicalState(Enum):
-    NORMAL = "Normal"
-    ABNORMAL = "Abnormal"
+    PANCYTOPENIA = "Pancytopenia"
+    ANEMIA = "Anemia"
+    SUSPECTED_LEUKEMIA = "Suspected-Leukemia"
+    LEUKEMOID_REACTION = "Leukemoid-reaction"
+    SUSPECTED_POLYCYTEMIA_VERA = "Suspected-Polycytemia-Vera"
