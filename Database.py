@@ -1,10 +1,78 @@
+from typing import List
+
+import mysql.connector
+from mysql.connector import Error
+
 from Patient import Patient
+from PatientState import PatientState
+from Test import Test
+from Treatment import Treatment
 
 
 class Database:
-    def __init__(self, connection_params):
-        self.connection_params = connection_params
-        # Initialize database connection here
+    def __init__(self, host, user, password, database):
+        self.host = host
+        self.user = user
+        self.password = password
+        self.database = database
+        self.connection = None
+        self.cursor = None
+
+        try:
+            self.connection = mysql.connector.connect(
+                host=self.host,
+                user=self.user,
+                password=self.password,
+                database=self.database
+            )
+
+            if self.connection.is_connected():
+                print("Successfully connected to the database")
+                self.cursor = self.connection.cursor()
+            else:
+                print("Failed to connect to the database")
+
+        except Error as e:
+            print(f"Error connecting to the database: {e}")
+
+    def __del__(self):
+        if self.connection and self.connection.is_connected():
+            self.cursor.close()
+            self.connection.close()
+            print("Database connection closed")
+
+    def execute_query(self, query, params=None):
+        try:
+            if params:
+                self.cursor.execute(query, params)
+            else:
+                self.cursor.execute(query)
+            self.connection.commit()
+            print("Query executed successfully")
+        except Error as e:
+            print(f"Error executing query: {e}")
+
+    def fetch_all(self, query, params=None):
+        try:
+            if params:
+                self.cursor.execute(query, params)
+            else:
+                self.cursor.execute(query)
+            return self.cursor.fetchall()
+        except Error as e:
+            print(f"Error fetching data: {e}")
+            return None
+
+    def fetch_one(self, query, params=None):
+        try:
+            if params:
+                self.cursor.execute(query, params)
+            else:
+                self.cursor.execute(query)
+            return self.cursor.fetchone()
+        except Error as e:
+            print(f"Error fetching data: {e}")
+            return None
 
     def add_patient(self, patient: Patient):
         # Implement method to add patient to database
