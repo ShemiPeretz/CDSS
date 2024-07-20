@@ -5,8 +5,7 @@ USE clinical_dss;
 CREATE TABLE patients (
     patient_id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100),
-    date_of_birth DATE,
-    gender ENUM('Male', 'Female', 'Other')
+    gender ENUM('Male', 'Female')
 );
 
 CREATE TABLE tests (

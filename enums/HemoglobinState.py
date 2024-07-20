@@ -7,3 +7,4 @@ class HemoglobinState(Enum):
     MILD_ANEMIA = "Mild-Anemia"
     NORMAL_HEMOGLOBIN = "Normal-Hemoglobin"
     POLYHEMIA = "Polyhemia"
+    POLYCYTEMIA = "Polycytemia"
