@@ -3,7 +3,7 @@ from typing import Optional
 
 from enums.HematologicalState import HematologicalState
 from enums.HemoglobinState import HemoglobinState
-from enums.SystematicToxicity import SystematicToxicity
+from enums.SystemicToxicity import SystematicToxicity
 
 
 @dataclass

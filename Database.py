@@ -7,6 +7,7 @@ from Patient import Patient
 from PatientState import PatientState
 from Test import Test
 from Treatment import Treatment
+from enums import SystemicToxicity
 from enums.Gender import Gender
 from enums.HematologicalState import HematologicalState
 from enums.HemoglobinState import HemoglobinState
@@ -78,9 +79,9 @@ class Database:
             return None
 
     def add_patient(self, patient: Patient):
-        query = """INSERT INTO patients (name, date_of_birth, gender) 
+        query = """INSERT INTO patients (first_name, last_name, gender) 
                    VALUES (%s, %s, %s)"""
-        params = (patient.name, patient.date_of_birth, patient.gender.value)
+        params = (patient.first_name, patient.last_name, patient.gender.value)
         self.execute_query(query, params)
 
 
@@ -89,8 +90,12 @@ class Database:
         pass
 
     def add_patient_state(self, patient_state: PatientState):
-        # Implement method to add patient state to database
-        pass
+        query = """INSERT INTO patient_states (test_id, last_state_id, patient_id, hemoglobin_state,
+         hematological_state, systemic_toxicity) 
+                   VALUES (%s, %s, %s, %s, %s, %s)"""
+        params = (patient_state.test_id, patient_state.last_state_id, patient_state.patient_id,
+                  patient_state.hemoglobin_state, patient_state.hematological_state, patient_state.systematic_toxicity)
+        self.execute_query(query, params)
 
     def add_treatment(self, treatment: Treatment):
         # Implement method to add treatment to database
@@ -108,13 +113,32 @@ class Database:
             )
         return None
 
-    def get_tests(self, patient_id: int) -> List[Test]:
-        # Implement method to retrieve tests for a patient
-        pass
+    def get_test(self, patient_id: int) -> List[Test]:
+        query = "SELECT * FROM patients WHERE patient_id = %s"
+        result = self.fetch_one(query, (patient_id,))
+        if result:
+            return Patient(
+                patient_id=result[0],
+                name=result[1],
+                date_of_birth=result[2],
+                gender=Gender(result[3])
+            )
+        return None
 
-    def get_patient_state(self, test_id: int) -> PatientState:
-        # Implement method to retrieve patient state for a test
-        pass
+    def get_patient_state(self, patient_id: int) -> PatientState:
+        query = "SELECT * FROM patient_states WHERE patient_id = %s"
+        result = self.fetch_one(query, (patient_id,))
+        if result:
+            return PatientState(
+                state_id = result[0],
+                test_id = result[1],
+                patient_id = result[2],
+                last_state_id = result[3],
+                hemoglobin_state = result[4],
+                hematological_state = result[5],
+                systematic_toxicity = result[6]
+            )
+        return None
 
     def get_recommended_treatment(self, patient_state: PatientState) -> Treatment:
         # Implement method to retrieve recommended treatment based on patient state
@@ -123,7 +147,7 @@ class Database:
     def get_hemoglobin_state(self, hemoglobin_level: float, gender: str) -> HemoglobinState:
         query = """
         SELECT hemoglobin_state 
-        FROM hemoglobin_state_classification 
+        FROM kb_hemoglobin_state 
         WHERE gender = %s AND %s BETWEEN min_level AND max_level
         """
         result = self.fetch_one(query, (gender, hemoglobin_level))
@@ -132,10 +156,13 @@ class Database:
     def get_hematological_state(self, hemoglobin_level: float, wbc_level: float, gender: str) -> HematologicalState:
         query = """
         SELECT hematological_state 
-        FROM hematological_state_classification 
+        FROM kb_hematological_state 
         WHERE gender = %s 
         AND %s BETWEEN min_hemoglobin AND max_hemoglobin
         AND %s BETWEEN min_wbc AND max_wbc
         """
         result = self.fetch_one(query, (gender, hemoglobin_level, wbc_level))
         return result[0] if result else None
+
+    def get_systemic_toxicity(self) -> SystemicToxicity:
+        pass

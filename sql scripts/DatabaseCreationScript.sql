@@ -33,6 +33,8 @@ CREATE TABLE tests (
 CREATE TABLE patient_states (
     state_id INT PRIMARY KEY AUTO_INCREMENT,
     test_id INT,
+    patient_id INT,
+    last_state_id INT,
     hemoglobin_state ENUM("Severe-Anemia", "Moderate-Anemia", "Mild-Anemia", "Normal-Hemoglobin", "Polyhemia", "Polycytemia"),
     hematological_state ENUM("Normal", "Polyhemia", "Pancytopenia", "Anemia", "Suspected-Leukemia", "Leukemoid-reaction", "Suspected-Polycytemia-Vera", "Leukopenia"),
     systemic_toxicity ENUM("Grade 1", "Grade 2", "Grade 3", "Grade 4"),
