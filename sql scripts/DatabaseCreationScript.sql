@@ -9,9 +9,9 @@ CREATE TABLE patients (
     gender ENUM('Male', 'Female')
 );
 
-CREATE TABLE tests_to_lionc_num (
+CREATE TABLE tests_to_loinc_num (
 	test_type TEXT,
-    LIONC_NUM TEXT
+    LOINC_NUM TEXT
 );
 
 CREATE TABLE tests (
@@ -19,7 +19,6 @@ CREATE TABLE tests (
     patient_id INT,
     transaction_time DATE,
     valid_start_time DATE,
-    valid_end_time DATE,
     LOINC_NUM TEXT,
     hemoglobin_level FLOAT,
     wbc_level FLOAT,
@@ -29,6 +28,7 @@ CREATE TABLE tests (
     allergic_state ENUM("Edema", "Bronchospasm", "Severe-Bronchospasm", "Anaphylactic-Shock"),
     FOREIGN KEY (patient_id) REFERENCES patients(patient_id)
 );
+
 
 CREATE TABLE patient_states (
     state_id INT PRIMARY KEY AUTO_INCREMENT,

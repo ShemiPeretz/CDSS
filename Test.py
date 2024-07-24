@@ -13,7 +13,6 @@ class Test:
     patient_id: int
     transaction_time: date
     valid_start_time: date
-    valid_end_time: date
     loinc_num: str
     hemoglobin_level: float
     wbc_level: float
