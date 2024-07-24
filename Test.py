@@ -14,9 +14,12 @@ class Test:
     transaction_time: date
     valid_start_time: date
     loinc_num: str
-    hemoglobin_level: float
-    wbc_level: float
-    fever: float
-    chills: Chills
-    skin_look: SkinLook
-    allergic_state: AllergicState
+    test_type: str
+    unit: str
+    test_value: str
+    hemoglobin_level: Optional[float]
+    wbc_level: Optional[float]
+    fever: Optional[float]
+    chills: Optional[Chills]
+    skin_look: Optional[SkinLook]
+    allergic_state: Optional[AllergicState]

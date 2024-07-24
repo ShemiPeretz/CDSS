@@ -1,5 +1,6 @@
 import mysql.connector
 from mysql.connector import Error
+import openpyxl
 
 from LoincManager import LOINCManager
 from PatientState import PatientState
@@ -114,12 +115,12 @@ class Database:
     def add_test(self, test):
         query = """
         INSERT INTO tests (patient_id, transaction_time, valid_start_time, 
-        LOINC_NUM, hemoglobin_level, wbc_level, fever, chills, skin_look, allergic_state) 
+        LOINC_NUM, test_type, unit, test_value, hemoglobin_level, wbc_level, fever, chills, skin_look, allergic_state) 
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """
         params = (test.patient_id, test.transaction_time, test.valid_start_time,
-                  test.LOINC_NUM, test.hemoglobin_level, test.wbc_level, test.fever, test.chills.value,
-                  test.skin_look.value, test.allergic_state.value)
+                  test.LOINC_NUM, test.test_type, test.unit, test.test_value, test.hemoglobin_level, test.wbc_level,
+                  test.fever, test.chills.value, test.skin_look.value, test.allergic_state.value)
         return self.execute_query(query, params)
 
     def get_test_by_id(self, test_id):
@@ -223,3 +224,39 @@ class Database:
     def get_recommended_treatment(self, patient_state: PatientState):
         return self.get_treatment_by_states(patient_state.hemoglobin_state, patient_state.hematological_state,
                                      patient_state.systematic_toxicity)
+
+
+    # Add Information from XLSX file ###################################################################################
+
+
+
+if __name__ == '__main__':
+
+    def parse_xlsx(file_path):
+        # Load the workbook
+        workbook = openpyxl.load_workbook(file_path)
+
+        # Select the active sheet
+        sheet = workbook.active
+
+        # Get the header row
+        header = [cell.value for cell in sheet[1]]
+
+        # Initialize a list to store the data
+        data = []
+
+        # Iterate through the rows, starting from the second row (index 2)
+        for row in sheet.iter_rows(min_row=2, values_only=True):
+            # Create a dictionary for each row
+            row_data = dict(zip(header, row))
+            data.append(row_data)
+
+        return data
+
+    # Usage
+    file_path = "C:\\Users\\shemi\\Downloads\\project_db.xlsx"
+    parsed_data = parse_xlsx(file_path)
+
+    # Print the first few entries
+    for entry in parsed_data[:5]:
+        print(entry)
