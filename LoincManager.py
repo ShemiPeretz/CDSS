@@ -4,7 +4,7 @@ from requests.auth import HTTPBasicAuth
 
 class LOINCManager:
     @staticmethod
-    def search_loinc_by_code(loinc_code):
+    def search_test_by_loinc_code(loinc_code):
         base_url = "https://fhir.loinc.org/CodeSystem/$lookup"
         auth = HTTPBasicAuth("shimonperetz", "shimonperetz")
         params = {

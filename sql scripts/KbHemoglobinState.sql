@@ -8,16 +8,16 @@ CREATE TABLE kb_hemoglobin_state (
 
 -- Insert data for females
 INSERT INTO kb_hemoglobin_state (gender, min_level, max_level, hemoglobin_state) VALUES
-('Female', 0, 8, 'Severe-Anemia'),
-('Female', 8, 10, 'Moderate-Anemia'),
-('Female', 10, 12, 'Mild-Anemia'),
-('Female', 12, 14, 'Normal-Hemoglobin'),
+('Female', 0, 7, 'Severe-Anemia'),
+('Female', 8, 9, 'Moderate-Anemia'),
+('Female', 10, 11, 'Mild-Anemia'),
+('Female', 12, 13, 'Normal-Hemoglobin'),
 ('Female', 14, 999, 'Polycytemia');
 
 -- Insert data for males
 INSERT INTO kb_hemoglobin_state (gender, min_level, max_level, hemoglobin_state) VALUES
-('Male', 0, 9, 'Severe-Anemia'),
-('Male', 9, 11, 'Moderate-Anemia'),
-('Male', 11, 13, 'Mild-Anemia'),
-('Male', 13, 16, 'Normal-Hemoglobin'),
+('Male', 0, 8, 'Severe-Anemia'),
+('Male', 9, 10, 'Moderate-Anemia'),
+('Male', 11, 12, 'Mild-Anemia'),
+('Male', 13, 15, 'Normal-Hemoglobin'),
 ('Male', 16, 999, 'Polyhemia');

@@ -34,6 +34,7 @@ CREATE TABLE patient_states (
     state_id INT PRIMARY KEY AUTO_INCREMENT,
     test_id INT,
     patient_id INT,
+	valid_start_time DATE,
     last_state_id INT,
     hemoglobin_state ENUM("Severe-Anemia", "Moderate-Anemia", "Mild-Anemia", "Normal-Hemoglobin", "Polyhemia", "Polycytemia"),
     hematological_state ENUM("Normal", "Polyhemia", "Pancytopenia", "Anemia", "Suspected-Leukemia", "Leukemoid-reaction", "Suspected-Polycytemia-Vera", "Leukopenia"),
